@@ -23,6 +23,7 @@
 		<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
 		<script type='text/javascript' src='https://cdn.jsdelivr.net/gh/WordPress/WordPress@5.6/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
 		<script type='text/javascript' src='https://cdn.jsdelivr.net/gh/wpcom-cn/assets/fonts/icons-2.6.4.js?ver=6.1.2' id='wpcom-icons-js'></script>
+		
 
 		{{ &OPT.codeBeforHead }}
 	</head>
@@ -54,6 +55,8 @@
 						</ul>
 					</nav>
 					<div class="navbar-action pull-right">
+						<input type="text" id="search-input" placeholder="搜索文章...">
+						<div id="search-results"></div>
 						<div id="j-user-wrap">
 							<a class="login cur" href="/admin">登录</a>
 						</div>
@@ -316,6 +319,47 @@
 				});
 			})(jQuery);</script>
 		{{ &OPT.codeBeforBody }}
+			//搜索脚本
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
+		<script>
+		// 假设有一个全局变量 articles 存储了所有文章的数据
+		var articles = [
+		  // 填充文章数据，每个文章对象应包含标题、内容等字段
+		  { title: "Article 1", content: "Lorem ipsum dolor sit amet...", tags: ["tag1", "tag2"] },
+		  // ...更多文章
+		];
+			
+		// 初始化 Lunr 索引
+		var idx = lunr(function () {
+		  this.field('title', { boost: 10 });
+		  this.field('content');
+		  this.field('tags');
+		
+		  // 添加文章到索引
+		  articles.forEach(function (article) {
+		    this.add(article);
+		  }, this);
+		});
+			
+		// 搜索函数
+		function search() {
+		  var input = document.getElementById('search-input');
+		  var query = input.value;
+		  var results = idx.search(query);
+		
+		  // 展示搜索结果
+		  var resultsContainer = document.getElementById('search-results');
+		  resultsContainer.innerHTML = ''; // 清空之前的结果
+		  results.forEach(function (result) {
+		    // 根据结果获取文章详情，并展示
+		    var article = articles.find(function (a) { return a.title === result.match });
+		    // 填充 resultsContainer 展示搜索结果
+		  });
+		}
+		
+		// 监听搜索框的输入事件
+		document.getElementById('search-input').addEventListener('input', search);
+		</script>
 	</body>
 
 </html>
