@@ -187,8 +187,11 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr/lunr.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            console.log("DOM fully loaded and parsed");
+
             // 获取文章数据
             const articles = {{ &articleList | json }};
+            console.log("Articles loaded:", articles);
             
             // 初始化 Lunr.js
             const idx = lunr(function () {
@@ -204,13 +207,19 @@
             // 搜索输入框事件
             const searchInput = document.getElementById('search-input');
             const searchResults = document.getElementById('search-results');
+            
+            console.log("Search input element:", searchInput);
+            console.log("Search results element:", searchResults);
 
             searchInput.addEventListener('input', function () {
                 const query = searchInput.value.trim();
                 searchResults.innerHTML = '';
 
                 if (query) {
+                    console.log("Searching for:", query);
                     const results = idx.search(query);
+                    console.log("Search results:", results);
+
                     if (results.length > 0) {
                         results.forEach(result => {
                             const article = articles.find(a => a.id === result.ref);
