@@ -25,34 +25,6 @@
     <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/wpcom-cn/assets/fonts/icons-2.6.4.js?ver=6.1.2' id='wpcom-icons-js'></script>
 
     {{ &OPT.codeBeforHead }}
-    <style>
-        .header .navbar-action {
-            display: flex;
-            align-items: center;
-        }
-        #search-input {
-            padding: 5px;
-            font-size: 14px;
-            margin-right: 10px;
-        }
-        #search-results {
-            max-width: 300px;
-            margin-top: 10px;
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            position: absolute;
-            z-index: 1000;
-        }
-        #search-results a {
-            display: block;
-            padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
-        #search-results a:last-child {
-            border-bottom: none;
-        }
-    </style>
 </head>
 <body class="archive paged category category-zhishi category-5 paged-2 category-paged-2 lang-cn el-boxed">
     <header class="header">
@@ -67,6 +39,7 @@
                     {{ #OPT.logo }}
                     <a href="/" rel="home"><img src="{{ &OPT.logo }}" alt="{{ &OPT.siteName }}"></a>
                     {{ /OPT.logo }}
+                    
                     {{ ^OPT.logo }}
                     <a href="/" rel="home"><img src="{{ &OPT.theme_github_path }}JustNews/files/logo2.png" alt="请自定义OPT.logo"></a>
                     {{ /OPT.logo }}
@@ -76,17 +49,28 @@
                 <nav class="navbar-left primary-menu">
                     <ul id="menu-%e5%af%bc%e8%88%aa" class="nav navbar-nav wpcom-adv-menu">
                         {{ #widgetMenuList }}
-                        <li class="menu-item"><a href="{{ &url }}">{{ &title }}</a></li>
+                            <li class="menu-item"><a href="{{ &url }}">{{ &title }}</a></li>
                         {{ /widgetMenuList }}
                     </ul>
                 </nav>
                 <div class="navbar-action pull-right">
-                    <input type="text" id="search-input" placeholder="搜索文章...">
-                    <div id="search-results"></div>
                     <div id="j-user-wrap">
                         <a class="login cur" href="/admin">登录</a>
                     </div>
                 </div>
+
+                <!-- 搜索表单开始 -->
+                <div class="search-form-container">
+                    <form role="search" method="get" class="search-form" action="/search">
+                        <label>
+                            <span class="screen-reader-text">搜索：</span>
+                            <input type="search" class="search-field" placeholder="搜索..." value="" name="s">
+                        </label>
+                        <input type="submit" class="search-submit" value="搜索">
+                    </form>
+                </div>
+                <!-- 搜索表单结束 -->
+
             </div>
         </div>
     </header>
@@ -102,13 +86,13 @@
                                     <a class="item-img-inner" href="{{ &url }}" title="{{ &title }}" rel="bookmark">
                                         <img width="437" height="300" src="{{ &img }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image j-lazy" alt="{{ &title }}" title="{{ &title }}" data-original="{{ &img }}" /></a>
                                     {{ #category }}
-                                    <a class="item-category" href="/category/{{&.}}">{{&.}}</a>
+                                        <a class="item-category" href="/category/{{&.}}" >{{&.}}</a>
                                     {{ /category }}
+                                    
                                 </div>
                                 <div class="item-content">
                                     <h2 class="item-title">
-                                        <a href="{{ &url }}" rel="bookmark">{{ &title }}</a>
-                                    </h2>
+                                        <a href="{{ &url }}" rel="bookmark">{{ &title }}</a></h2>
                                     <div class="item-excerpt">
                                         <p>{{ &contentText }} ...</p>
                                     </div>
@@ -130,6 +114,7 @@
                                 </div>
                             </li>
                             {{ /articleList }}
+
                         </ul>
                         <ul class="pagination">
                             {{ #pageNewer }}
@@ -138,10 +123,10 @@
                                     <i class="wpcom-icon wi">
                                         <svg aria-hidden="true"><use xlink:href="#wi-arrow-left"></use></svg>
                                     </i>
-                                    <span>上一页</span>
-                                </a>
+                                    <span>上一页</span></a>
                             </li>
                             {{ /pageNewer }}
+
                             {{ #pageOlder }}
                             <li class="next">
                                 <a href="{{ &url }}" class="next">
@@ -152,6 +137,7 @@
                                 </a>
                             </li>
                             {{ /pageOlder }}
+
                         </ul>
                     </div>
                 </div>
@@ -159,20 +145,16 @@
             <aside class="sidebar">
                 <div id="wpcom-post-thumb-2" class="widget widget_post_thumb">
                     <h3 class="widget-title">
-                        <span>近期文章</span>
-                    </h3>
+                        <span>近期文章</span></h3>
                     <ul>
                         {{ #widgetRecentlyList }}
                         <li class="item">
                             <div class="item-img">
                                 <a class="item-img-inner" href="{{ &url }}" title="{{ &title }}" rel="bookmark">
-                                    <img width="200" height="133" src="{{ &img }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image j-lazy" alt="{{ &title }}" title="{{ &title }}" data-original="{{ &img }}" />
-                                </a>
+                                    <img width="90" height="62" src="{{ &img }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image j-lazy" alt="{{ &title }}" title="{{ &title }}" data-original="{{ &img }}"></a>
                             </div>
                             <div class="item-content">
-                                <h2 class="item-title">
-                                    <a href="{{ &url }}" rel="bookmark">{{ &title }}</a>
-                                </h2>
+                                <h4 class="item-title"><a href="{{ &url }}" rel="bookmark">{{ &title }}</a></h4>
                                 <div class="item-meta">
                                     <span class="item-meta-li date">{{ &createDate10 }}</span>
                                 </div>
@@ -181,58 +163,83 @@
                         {{ /widgetRecentlyList }}
                     </ul>
                 </div>
+
+                <div id="wpcom-catlist-3" class="widget widget_catlist">
+                    <h3 class="widget-title">
+                        <span>分类目录</span></h3>
+                    <ul>
+                        {{ #widgetCategoryList }}
+                        <li class="cat-item">
+                            <a href="/category/{{ &slug }}">{{ &name }}</a>
+                        </li>
+                        {{ /widgetCategoryList }}
+                    </ul>
+                </div>
+
+                <div id="widget_tag_cloud" class="widget widget_tag_cloud">
+                    <h3 class="widget-title">
+                        <span>标签</span></h3>
+                    <div class="tagcloud">
+                        {{ #widgetTagCloud }}
+                        <a href="/tag/{{ &slug }}" class="tag-cloud-link tag-link-4 tag-link-position-1" style="font-size: 22pt">{{ &name }}</a>
+                        {{ /widgetTagCloud }}
+                    </div>
+                </div>
             </aside>
         </div>
     </div>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr/lunr.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log("DOM fully loaded and parsed");
+    <footer class="footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="recent-posts-2" class="widget widget_recent_entries">
+                            <h3 class="widget-title">
+                                <span>最近文章</span></h3>
+                            <ul>
+                                {{ #widgetRecentlyList }}
+                                <li>
+                                    <a href="{{ &url }}">{{ &title }}</a>
+                                </li>
+                                {{ /widgetRecentlyList }}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="archives-2" class="widget widget_archive">
+                            <h3 class="widget-title">
+                                <span>文章归档</span></h3>
+                            <ul>
+                                {{ #widgetArchiveList }}
+                                <li>
+                                    <a href="/{{ &year }}/{{ &month }}">{{ &year }}年{{ &month }}月</a>
+                                </li>
+                                {{ /widgetArchiveList }}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <p>{{ &OPT.footerInfo }}</p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <ul class="footer-nav">
+                            <li><a href="/sitemap.xml">网站地图</a></li>
+                            <li><a href="/feed">RSS订阅</a></li>
+                            <li><a href="/admin">后台管理</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-            // 获取文章数据
-            const articles = {{ &articleList | json }};
-            console.log("Articles loaded:", articles);
-            
-            // 初始化 Lunr.js
-            const idx = lunr(function () {
-                this.ref('id');
-                this.field('title');
-                this.field('contentText');
-                
-                articles.forEach(article => {
-                    this.add(article);
-                });
-            });
-
-            // 搜索输入框事件
-            const searchInput = document.getElementById('search-input');
-            const searchResults = document.getElementById('search-results');
-            
-            console.log("Search input element:", searchInput);
-            console.log("Search results element:", searchResults);
-
-            searchInput.addEventListener('input', function () {
-                const query = searchInput.value.trim();
-                searchResults.innerHTML = '';
-
-                if (query) {
-                    console.log("Searching for:", query);
-                    const results = idx.search(query);
-                    console.log("Search results:", results);
-
-                    if (results.length > 0) {
-                        results.forEach(result => {
-                            const article = articles.find(a => a.id === result.ref);
-                            const resultItem = document.createElement('div');
-                            resultItem.innerHTML = `<a href="${article.url}">${article.title}</a>`;
-                            searchResults.appendChild(resultItem);
-                        });
-                    } else {
-                        searchResults.innerHTML = '<p>未找到匹配的文章。</p>';
-                    }
-                }
-            });
-        });
-    </script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/WordPress/WordPress@5.6/wp-includes/js/wp-embed.min.js?ver=5.6' id='wp-embed-js'></script>
+    {{ &OPT.codeBeforBody }}
 </body>
 </html>
