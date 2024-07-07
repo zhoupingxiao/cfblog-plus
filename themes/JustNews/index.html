@@ -25,6 +25,34 @@
     <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/wpcom-cn/assets/fonts/icons-2.6.4.js?ver=6.1.2' id='wpcom-icons-js'></script>
 
     {{ &OPT.codeBeforHead }}
+    <style>
+        .header .navbar-action {
+            display: flex;
+            align-items: center;
+        }
+        #search-input {
+            padding: 5px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        #search-results {
+            max-width: 300px;
+            margin-top: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: absolute;
+            z-index: 1000;
+        }
+        #search-results a {
+            display: block;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        #search-results a:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body class="archive paged category category-zhishi category-5 paged-2 category-paged-2 lang-cn el-boxed">
     <header class="header">
